@@ -2,10 +2,10 @@
 
 @section('content')
 
-<div class="flex sm:justify-between">
+<div class="flex justify-between">
     <div class="left-side" style="width: 58%">
-        <div class="mt-10 ml-36">
-            <img class="w-44 h-11" src="{{ asset('/images/logo.svg') }}" alt="coronatime logo">
+        <div class="mt-10 ml-10 lg:ml-36">
+            <img class="w-40 h-10" src="{{ asset('/images/logo.svg') }}" alt="coronatime logo">
                 @yield('slot')
         </div>
     </div>

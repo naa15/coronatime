@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\SessionController;
+use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -40,3 +41,8 @@ Route::post('logout', [SessionController::class, 'destroy'])->name('logout')->mi
 Route::get('dashboard', function () {
 	return view('dashboard');
 })->name('dashboard')->middleware('auth');
+
+Route::get('/clear-cache', function() {
+    $exitCode = Artisan::call('cache:clear');
+	return $exitCode.' cache cleared';
+});

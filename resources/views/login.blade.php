@@ -11,7 +11,7 @@
         <x-button>
             Log In
         </x-button>
-        <p class="text-lg text-gray-500 mt-3 ml-10">Don’t have an account? <a class="font-bold text-black"
+        <p class="text-lg text-gray-500 mt-3 ml-10 w-96">Don’t have an account? <a class="font-bold text-black"
                 href="{{ route('register') }}">Sign up for free</a></p>
     </form>
 
