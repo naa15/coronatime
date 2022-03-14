@@ -4,6 +4,9 @@ use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\SessionController;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Foundation\Auth\EmailVerificationRequest;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 /*
 |--------------------------------------------------------------------------
@@ -15,6 +18,27 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
+
+Route::get('/email/verify/{id}/{hash}', function (EmailVerificationRequest $request) {
+	// dd(auth()->user());
+	$request->fulfill();
+
+	auth()->logout();
+
+	return view('auth.verified-email');
+})->name('verification.verify');
+// ->middleware(['auth', 'signed'])
+
+Route::post('/email/verification-notification', function (Request $request) {
+	$request->user()->sendEmailVerificationNotification();
+
+	return back()->with('message', 'Verification link sent!');
+})->middleware(['auth', 'throttle:6,1'])->name('verification.send');
+
+Route::get('/email/verify', function () {
+	return view('auth.verify-email');
+})->middleware('auth')->name('verification.notice');
+
 Route::get('/', function () {
 	if (auth()->check())
 	{
@@ -40,9 +64,21 @@ Route::post('logout', [SessionController::class, 'destroy'])->name('logout')->mi
 
 Route::get('dashboard', function () {
 	return view('dashboard');
-})->name('dashboard')->middleware('auth');
+})->name('dashboard')->middleware('verified');
 
-Route::get('/clear-cache', function() {
-    $exitCode = Artisan::call('cache:clear');
-	return $exitCode.' cache cleared';
+Route::get('/clear-cache', function () {
+	$exitCode = Artisan::call('cache:clear');
+	return $exitCode . ' cache cleared';
 });
+
+Route::get('reset-password-1', function() {
+	return view('reset-password-1');
+})->name('reset-password-1');
+
+Route::post('reset-password-1', function() {
+	return view('auth.check-email');
+})->name('reset-password-1');
+
+Route::get('reset-password-2', function() {
+	return view('reset-password-2');
+})->name('reset-password-2');
