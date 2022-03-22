@@ -4,6 +4,9 @@
 
 <img src="{{ asset('images/checkicon.svg')}}" alt="check">
 
-We have sent you a confirmation email
+Your password has been updeted successfully
 
+<a href="{{ route('login') }}">
+    <x-button>Sign in</x-button>
+</a>
 @endsection

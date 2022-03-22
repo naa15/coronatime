@@ -7,6 +7,11 @@ use Illuminate\Support\Facades\Route;
 use Illuminate\Foundation\Auth\EmailVerificationRequest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Password;
+use Illuminate\Auth\Events\PasswordReset;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Str;
 
 /*
 |--------------------------------------------------------------------------
@@ -63,22 +68,78 @@ Route::post('login', [SessionController::class, 'store'])->name('login')->middle
 Route::post('logout', [SessionController::class, 'destroy'])->name('logout')->middleware('auth');
 
 Route::get('dashboard', function () {
-	return view('dashboard');
+	return view('worldwide');
 })->name('dashboard')->middleware('verified');
+
+Route::get('countries', function () {
+	return view('countries');
+})->name('countries')->middleware('verified');
 
 Route::get('/clear-cache', function () {
 	$exitCode = Artisan::call('cache:clear');
 	return $exitCode . ' cache cleared';
 });
 
-Route::get('reset-password-1', function() {
-	return view('reset-password-1');
-})->name('reset-password-1');
+Route::get('/forgot-password', function () {
+	return view('auth.forgot-password');
+})->middleware('guest')->name('password.request');
 
-Route::post('reset-password-1', function() {
-	return view('auth.check-email');
-})->name('reset-password-1');
+Route::post('/forgot-password', function (Request $request) {
+	$request->validate(['email' => 'required|email']);
 
-Route::get('reset-password-2', function() {
-	return view('reset-password-2');
-})->name('reset-password-2');
+	// exists:users
+
+	$status = Password::sendResetLink(
+		$request->only('email')
+	);
+
+	return $status === Password::RESET_LINK_SENT
+				? view('auth.check-email')->with(['status' => __($status)])
+				: back()->withErrors(['email' => __($status)]);
+})->middleware('guest')->name('password.email');
+
+Route::get('/reset-password/{token}', function ($token, Request $request) {
+	return view('auth.reset-password', ['token' => $token, 'email' => $request->only('email')]);
+})->middleware('guest')->name('password.reset');
+
+Route::post('/reset-password', function (Request $request) {
+	// dd($request->only('email', 'password', 'token'));
+	$request->validate([
+		'token'    => 'required',
+		'email'    => 'required|email',
+		'password' => 'required|min:3|confirmed',
+	]);
+
+	$status = Password::reset(
+		$request->only('email', 'password', 'password_confirmation', 'token'),
+		function ($user, $password) {
+			$user->forceFill([
+				'password' => Hash::make($password),
+			])->setRememberToken(Str::random(60));
+			$user->save();
+
+			event(new PasswordReset($user));
+		}
+	);
+
+	return $status === Password::PASSWORD_RESET
+				? view('auth.password-updated')->with('status', __($status))
+				: back()->withErrors(['email' => [__($status)]]);
+})->middleware('guest')->name('password.update');
+
+Route::get('test_email', function(){
+	Mail::raw('Sending emails with Mailgun and Laravel is easy!', function($message)
+	{
+		$message->subject('Mailgun and Laravel are awesome!');
+		$message->from('nanu@redberry.ge', 'Website Name');
+		$message->to('nanu@redberry.ge');
+	});
+});
+
+
+Route::get('aba-vnaxot', function(){
+	$user = App\Models\User::find(1);
+    return new App\Mail\ResetPasswordEmail($user);
+	// return view('vendor/mail/html/message');
+});
+

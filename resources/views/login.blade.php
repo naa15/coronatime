@@ -9,12 +9,12 @@
         <x-input name="username" placeholder="Enter unique username" required />
         <x-input name="password" type="password" placeholder="Fill in password" required />
         <p class="flex justify-end mt-6">
-            <a class="font-semibold text-blue-600" href="{{ route('reset-password-1') }}">Forgot password?</a>
+            <a class="font-semibold text-blue-600" href="{{ route('password.request') }}">Forgot password?</a>
         </p>
         <x-button>
             Log In
         </x-button>
-        <p class="text-lg text-gray-500 mt-3 ml-10 w-96">Don’t have an account? <a class="font-bold text-black"
+        <p class="text-lg text-gray-500 mt-3 md:ml-10 md:w-96">Don’t have an account? <a class="font-bold text-black"
                 href="{{ route('register') }}">Sign up for free</a></p>
     </form>
 
