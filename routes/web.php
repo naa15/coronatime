@@ -2,6 +2,8 @@
 
 use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\SessionController;
+use App\Models\Country;
+use App\Models\User;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Foundation\Auth\EmailVerificationRequest;
@@ -9,9 +11,12 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Password;
 use Illuminate\Auth\Events\PasswordReset;
+use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Str;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -137,9 +142,20 @@ Route::get('test_email', function(){
 });
 
 
-Route::get('aba-vnaxot', function(){
-	$user = App\Models\User::find(1);
-    return new App\Mail\ResetPasswordEmail($user);
+Route::get('mail-test-00', function(){
+	$user = User::find(1);
+    // return new App\Mail\ResetPasswordEmail($user);
 	// return view('vendor/mail/html/message');
 });
 
+Route::get('check-devtest-response', function(){
+	$response = Http::get('https://devtest.ge/countries')->json();
+
+	foreach ($response as $single)
+	{
+		print_r($single['code']);
+		echo nl2br("\n");
+		$data = Http::post('https://devtest.ge/get-country-statistics', ['code' => $single['code']])->json();
+		dd($data['recovered']);
+	}
+});

@@ -22,8 +22,8 @@
         <main class="md:ml-28 md:mr-28">
             <p class="ml-4 font-black text-xl md:text-2xl mt-6">Worldwide Statistics</p>
             <div class="ml-4 flex space-x-6 mt-6 mb-4 border-b">
-                <p class="text-sm md:text-base @if(request()->routeIs('dashboard')) border-b-2 font-bold border-black @endif">Worldwide</p>
-                <p class="text-sm md:text-base @if(request()->routeIs('countries')) border-b-2 font-bold border-black @endif">By country</p>
+                <a href="{{ route('dashboard') }}" class="text-sm md:text-base @if(request()->routeIs('dashboard')) border-b-2 font-bold border-black @endif">Worldwide</a>
+                <a href="{{ route('countries') }}" class="text-sm md:text-base @if(request()->routeIs('countries')) border-b-2 font-bold border-black @endif">By country</a>
             </div>
             @yield('slot')
         </main>
