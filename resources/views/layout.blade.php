@@ -9,9 +9,8 @@
     @livewireStyles
 </head>
 <body>
-    <div>
-        @yield('content')
-    </div>
+    @yield('content')
+    
     @livewireScripts
 </body>
 </html>

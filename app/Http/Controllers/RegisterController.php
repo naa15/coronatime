@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use Illuminate\Auth\Events\Registered;
 
 class RegisterController extends Controller
 {
@@ -16,8 +17,13 @@ class RegisterController extends Controller
 
 		$user = User::create($attributes);
 
-        auth()->login($user);
+		event(new Registered($user));
 
-		return to_route('dashboard');
+		auth()->login($user);
+
+		return view('auth.verify-email');
+		// auth()->login($user);
+
+		// return to_route('dashboard');
 	}
 }
