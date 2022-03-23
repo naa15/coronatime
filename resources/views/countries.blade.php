@@ -17,8 +17,8 @@
         <div class="bg-gray-100 text-sm font-medium h-14 flex items-center">
             Death
         </div>
-        <div class="bg-gray-100 text-sm font-medium h-14 flex items-center">
-            <p class="rounded-tr-2xl">Recovered</p>
+        <div class="bg-gray-100 text-sm font-medium rounded-tr-2xl h-14 flex items-center">
+            Recovered
         </div>
 
         <div class="h-14 flex items-center ml-10">
