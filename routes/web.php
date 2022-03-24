@@ -72,11 +72,15 @@ Route::post('login', [SessionController::class, 'store'])->name('login')->middle
 Route::post('logout', [SessionController::class, 'destroy'])->name('logout')->middleware('auth');
 
 Route::get('dashboard', function () {
-	return view('worldwide');
+	return view('worldwide', [
+		'worldwideInfo' => Country::where('code', 'WRLD')->first(),
+	]);
 })->name('dashboard')->middleware('verified');
 
 Route::get('countries', function () {
-	return view('countries');
+	return view('countries', [
+		'countries' => Country::all(),
+	]);
 })->name('countries')->middleware('verified');
 
 Route::get('/clear-cache', function () {
@@ -143,45 +147,6 @@ Route::get('mail-test-00', function () {
 	$user = User::find(1);
 	// return new App\Mail\ResetPasswordEmail($user);
 	// return view('vendor/mail/html/message');
-});
-
-Route::get('check-devtest-response', function () {
-	$response = Http::get('https://devtest.ge/countries')->json();
-
-	// dd($response);
-	foreach ($response as $single)
-	{
-		if ($single['code'] === 'MA' || $single['code'] === 'ME')
-		{
-			continue;
-		}
-		// print_r($single['code']);
-		// echo nl2br("\n");
-		$data = Http::post('https://devtest.ge/get-country-statistics', ['code' => $single['code']])->json();
-		$country = Country::where('code', '=', $single['code'])->first();
-		if ($country == null)
-		{
-			// dd($data);
-			Country::create([
-				'code' => $single['code'],
-				'name' => [
-					'en' => $single['name']['en'],
-					'ka' => $single['name']['ka'],
-				],
-				'confirmed' => $data['confirmed'],
-				'recovered' => $data['recovered'],
-				'deaths'    => $data['deaths'],
-			]);
-		}
-		else
-		{
-			$country->confirmed = $data['confirmed'];
-			$country->recovered = $data['recovered'];
-			$country->deaths = $data['deaths'];
-		}
-	}
-
-	dd(Country::all()->toArray());
 });
 
 Route::get('users', function(){
