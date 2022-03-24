@@ -17,6 +17,9 @@ return new class extends Migration
             $table->id();
             $table->string('code')->unique();
             $table->json('name')->nullable();
+            $table->bigInteger('confirmed');
+            $table->bigInteger('recovered');
+            $table->bigInteger('deaths');
             $table->timestamps();
         });
     }

@@ -17,7 +17,6 @@ use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Str;
 
-
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -132,30 +131,59 @@ Route::post('/reset-password', function (Request $request) {
 				: back()->withErrors(['email' => [__($status)]]);
 })->middleware('guest')->name('password.update');
 
-Route::get('test_email', function(){
-	Mail::raw('Sending emails with Mailgun and Laravel is easy!', function($message)
-	{
+Route::get('test_email', function () {
+	Mail::raw('Sending emails with Mailgun and Laravel is easy!', function ($message) {
 		$message->subject('Mailgun and Laravel are awesome!');
 		$message->from('nanu@redberry.ge', 'Website Name');
 		$message->to('nanu@redberry.ge');
 	});
 });
 
-
-Route::get('mail-test-00', function(){
+Route::get('mail-test-00', function () {
 	$user = User::find(1);
-    // return new App\Mail\ResetPasswordEmail($user);
+	// return new App\Mail\ResetPasswordEmail($user);
 	// return view('vendor/mail/html/message');
 });
 
-Route::get('check-devtest-response', function(){
+Route::get('check-devtest-response', function () {
 	$response = Http::get('https://devtest.ge/countries')->json();
 
+	// dd($response);
 	foreach ($response as $single)
 	{
-		print_r($single['code']);
-		echo nl2br("\n");
+		if ($single['code'] === 'MA' || $single['code'] === 'ME')
+		{
+			continue;
+		}
+		// print_r($single['code']);
+		// echo nl2br("\n");
 		$data = Http::post('https://devtest.ge/get-country-statistics', ['code' => $single['code']])->json();
-		dd($data['recovered']);
+		$country = Country::where('code', '=', $single['code'])->first();
+		if ($country == null)
+		{
+			// dd($data);
+			Country::create([
+				'code' => $single['code'],
+				'name' => [
+					'en' => $single['name']['en'],
+					'ka' => $single['name']['ka'],
+				],
+				'confirmed' => $data['confirmed'],
+				'recovered' => $data['recovered'],
+				'deaths'    => $data['deaths'],
+			]);
+		}
+		else
+		{
+			$country->confirmed = $data['confirmed'];
+			$country->recovered = $data['recovered'];
+			$country->deaths = $data['deaths'];
+		}
 	}
+
+	dd(Country::all()->toArray());
+});
+
+Route::get('users', function(){
+	dd(User::all());
 });
