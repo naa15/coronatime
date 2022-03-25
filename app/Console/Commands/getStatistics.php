@@ -81,16 +81,24 @@ class getStatistics extends Command
 			sleep(2);
 		}
 
-		Country::create([
-			'code' => 'WRLD',
-			'name' => [
-				'en' => 'Worldwide',
-				'ka' => 'მსოფლიოში',
-			],
-			'confirmed' => $confirmedSum,
-			'recovered' => $recoveredSum,
-			'deaths'    => $deathsSum,
-		]);
+		$country = Country::where('code', '=', 'WRLD')->first();
+		if ($country == null)
+		{
+			Country::create([
+				'code' => 'WRLD',
+				'name' => [
+					'en' => 'Worldwide',
+					'ka' => 'მსოფლიოში',
+				],
+				'confirmed' => $confirmedSum,
+				'recovered' => $recoveredSum,
+				'deaths'    => $deathsSum,
+			]);
+		} else {
+			$country->confirmed = $confirmedSum;
+			$country->recovered = $recoveredSum;
+			$country->deaths = $deathsSum;	
+		}
 		echo 'The data has been fetched successfully!';
 		return 0;
 	}

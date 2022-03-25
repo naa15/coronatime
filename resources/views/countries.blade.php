@@ -11,15 +11,31 @@
     <div class="grid grid-cols-4 mt-6 border-2 md:rounded-2xl md:mr-4 md:ml-4">
         <div class="bg-gray-100 text-sm font-medium md:rounded-tl-2xl h-14 flex items-center">
             <p class="md:ml-10 ml-4">Location</p>
+            <div class="ml-1">
+                <img src="{{ asset('/images/upper.svg') }}" alt="">
+                <img src="{{ asset('/images/down.svg') }}" alt="">
+            </div>
         </div>
         <div class="bg-gray-100 text-sm font-medium h-14 flex items-center">
-            <p class="ml-6 mr-2">New cases</p>
+            <p class="ml-6">New cases</p>
+            <div class="ml-1">
+                <img src="{{ asset('/images/upper.svg') }}" alt="">
+                <img src="{{ asset('/images/down.svg') }}" alt="">
+            </div>
         </div>
         <div class="bg-gray-100 text-sm font-medium h-14 flex items-center">
             Death
+            <div class="ml-1">
+                <img src="{{ asset('/images/upper.svg') }}" alt="">
+                <img src="{{ asset('/images/down.svg') }}" alt="">
+            </div>
         </div>
         <div class="bg-gray-100 text-sm font-medium md:rounded-tr-2xl h-14 flex items-center">
             Recovered
+            <div class="ml-1">    
+                <img src="{{ asset('/images/upper.svg') }}" alt="" class="">
+                <img src="{{ asset('/images/down.svg') }}" alt="">
+            </div>
         </div>
 
         @foreach ($countries as $country)
