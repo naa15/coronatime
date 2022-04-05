@@ -4,7 +4,7 @@
     <div class="">
         <header class="border-b">
             <div class="flex justify-between sm:ml-28 sm:mr-28 mb-5">
-                <img class="sm:ml-0 ml-4 mt-5" src="{{ asset('/images/logo.svg') }}" alt="coronatime logo">
+                <a href="/"><img class="sm:ml-0 ml-4 mt-5" src="{{ asset('/images/logo.svg') }}" alt="coronatime logo"></a>
                 <div class="flex items-center mr-4 mt-7 space-x-4">
                     <form action="{{ route('change-localee') }}" method="POST">
                         @csrf
@@ -13,7 +13,7 @@
                             <option value="ka" @if(app()->currentLocale() == 'ka') selected @endif>Georgian</option>
                         </select>
                     </form>
-                    <img class="w-5 md:hidden" src="{{ asset('images/menu.svg') }}" alt="menu">
+                    <x-responsive-menu class=" w-5"/>
                     <p class="hidden md:block font-bold border-r pr-4">{{ auth()->user()->username }}</p>
                     <form action="logout" method="POST" class="hidden md:block">
                         @csrf

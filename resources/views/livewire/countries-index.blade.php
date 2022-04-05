@@ -33,7 +33,7 @@
                 @if(app()->currentLocale() == 'en') 
                     New cases
                 @else
-                    დადასტურებული
+                    ახალი შემთხ.
                 @endif
             </p>
             <div wire:model="filter" class="ml-1 md:mr-0 mr-5">
@@ -55,7 +55,7 @@
             @if(app()->currentLocale() == 'en') 
                 Deaths
             @else
-                გარდაცვლილი
+                სიკვდილი
             @endif
             <div wire:model="filter" class="ml-1">
                 <a href="{{ route('countries', ['filter' => 'deaths', 'order' => 'desc']) }}">
@@ -76,7 +76,7 @@
             @if(app()->currentLocale() == 'en') 
                 Recovered
             @else
-                გამოჯანმრთელებული
+                გამოჯანმრთ.
             @endif
             <div wire:model="filter" class="ml-1">
                 <a href="{{ route('countries', ['filter' => 'recovered', 'order' => 'desc']) }}">

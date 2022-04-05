@@ -14,12 +14,12 @@
         "axios": "^0.25",
         "laravel-mix": "^6.0.6",
         "lodash": "^4.17.19",
+        "postcss": "^8.3.11",
         "sass": "^1.49.7",
         "sass-loader": "^12.5.0",
-        "postcss": "^8.3.11",
-        "tailwindcss": "^2.2.19"    
+        "tailwindcss": "^2.2.19"
     },
     "dependencies": {
-        "alpinejs": "^3.8.1"
+        "alpinejs": "^3.9.5"
     }
 }
