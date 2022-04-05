@@ -62,19 +62,17 @@ class CountriesIndex extends Component
             $countries = Country::all();
         }
 
-        // if(strlen($this->search) >= 3) {
-        //     $countries = $countries->where('name', 'like', DB::raw("'%$this->search%'"));
 
-        //     dd($countries);
-        // }
-        // dd($this->search);
+        if(strlen($this->search) >= 3) {
+            if(app()->currentLocale() == 'ka'){
+                $countries = Country::where('name->ka', 'like','%' . $this->search . '%')->get();
+            } else {
+                $countries = Country::where('name->en', 'like','%' . $this->search . '%')->get();
+            }
+        }
+        
         return view('livewire.countries-index', [
             'countries' => $countries
-                ->when(strlen($this->search) >= 3, function ($query) {
-                    // return $query->where('name', 'like', '%' . $this->search . '%');
-                    // return ($query->where('name', 'Germany'));
-                    return $query->where('name', 'LIKE', '%' . $this->search . '%');
-                })
         ]);
     }
 }
