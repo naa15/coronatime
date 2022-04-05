@@ -18,6 +18,9 @@ module.exports = {
         yellow: {
           500: '#EAD621',
         },
+        grey: {
+          300: 'BFC0C4',
+        },
       }
     },
   },
