@@ -19,9 +19,10 @@ class ResetPasswordEmail extends Mailable
 	 *
 	 * @return void
 	 */
-	public function __construct($user)
+	public function __construct($user, $url)
 	{
 		$this->user = $user;
+		$this->url = $url;
 	}
 
 	/**
@@ -31,6 +32,7 @@ class ResetPasswordEmail extends Mailable
 	 */
 	public function build()
 	{
-		return $this->markdown('emails.reset-password-email');
+		return $this->from('nanu@redberry.ge')
+			->markdown('emails.reset-password-email');
 	}
 }

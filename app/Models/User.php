@@ -8,11 +8,11 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Illuminate\Support\Str;
 
 class User extends Authenticatable implements MustVerifyEmail
 {
 	use HasApiTokens, HasFactory, Notifiable, CanResetPassword;
-
 
 	protected $guarded = [];
 
@@ -28,5 +28,6 @@ class User extends Authenticatable implements MustVerifyEmail
 	public function setPasswordAttribute($password)
 	{
 		$this->attributes['password'] = bcrypt($password);
+		$this->attributes['verification_token'] = Str::random(60);
 	}
 }

@@ -19,10 +19,6 @@ class RegisterController extends Controller
 
 		event(new Registered($user));
 
-		// auth()->login($user);
-
 		return view('auth.verify-email');
-
-		// return to_route('dashboard');
 	}
 }

@@ -1,12 +1,10 @@
 @component('mail::message')
-# Verify Email
+# Confirmation email
 
-Click the button below to verify your email address.
+click this button to verify your email
 
 @component('mail::button', ['url' => $url ])
-Verify Email Adress
+Verify Email
 @endcomponent
 
-Thanks,<br>
-{{ config('app.name') }}
 @endcomponent

@@ -1,14 +1,10 @@
 @component('mail::message')
-{{-- <link href="{{ asset('css/app.css') }}" rel="stylesheet"> --}}
-
-Confirmation Email
+# Confirmation email
 
 click this button to verify your email
 
-@component('components.button', ['url' => '$url'])
+@component('mail::button', ['url' => $url ])
 Verify Email
 @endcomponent
 
-Thanks,<br>
-{{ config('app.name') }}
 @endcomponent
