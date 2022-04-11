@@ -4,9 +4,9 @@
 
 <img src="{{ asset('images/checkicon.svg')}}" alt="check">
 
-Your password has been updeted successfully
+{{ __('messages.password_updated_message') }}
 
 <a href="{{ route('login') }}">
-    <x-button>Sign in</x-button>
+    <x-button>{{ __('messages.sign_in_button_label') }}</x-button>
 </a>
 @endsection

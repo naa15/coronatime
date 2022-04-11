@@ -17,33 +17,21 @@
                     <p class="hidden md:block font-bold border-r pr-4">{{ auth()->user()->username }}</p>
                     <form action="logout" method="POST" class="hidden md:block">
                         @csrf
-                        <button type="submit" class="">{{ app()->currentLocale() == 'en' ? 'logout' : 'გამოსვლა' }}</button>
+                        <button type="submit" class="">{{ __('messages.log_out') }}</button>
                     </form>
                 </div>
             </div>
         </header>
         <main class="md:ml-28 md:mr-28">
             <p class="ml-4 font-black text-xl md:text-2xl mt-6">
-                @if(app()->currentLocale() == 'en') 
-                    Worldwide Statistics
-                @else
-                    მსოფლიო სტატისტიკა
-                @endif
+                {{ __('messages.worldwide_statistics_title') }}
             </p>
             <div class="ml-4 flex space-x-6 mt-6 mb-4 border-b">
                 <a href="{{ route('dashboard') }}" class="text-sm md:text-base @if(request()->routeIs('dashboard')) border-b-2 font-bold border-black @endif">
-                    @if(app()->currentLocale() == 'en') 
-                        Worldwide
-                    @else
-                        მსოფლიოს მასშტაბით
-                    @endif
+                    {{ __('messages.worldwide_title') }}
                 </a>
                 <a href="{{ route('countries') }}" class="text-sm md:text-base @if(request()->routeIs('countries')) border-b-2 font-bold border-black @endif">
-                    @if(app()->currentLocale() == 'en') 
-                        By country
-                    @else
-                        ქვეყნების მიხედვით
-                    @endif
+                    {{ __('messages.by_country') }}
                 </a>
             </div>
             @yield('slot')

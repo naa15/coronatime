@@ -1,17 +1,13 @@
 <div class="">
     <div class="border-2 flex mt-6 px-4 py-1.5 rounded-xl w-60 ml-4">
         <img src="{{ asset('images/search.svg') }}" alt="search" class="mr-2">
-        <input wire:model="search" type="text" placeholder="@if(app()->currentLocale() == 'en') Search by country @else მოძებნე ქვეყანა @endif" class="outline-none w-full">
+        <input wire:model="search" type="text" placeholder="{{ __('messages.search_by_country') }}" class="outline-none w-full">
     </div>
 
     <div class="grid grid-cols-4 mt-6 border-2 md:rounded-2xl md:mr-4 md:ml-4">
         <div class="bg-gray-100 text-sm font-semibold md:rounded-tl-2xl h-14 flex items-center">
             <p class="md:ml-10 ml-4">
-                @if(app()->currentLocale() == 'en') 
-                    Location
-                @else
-                    ქვეყანა
-                @endif
+                {{ __('messages.location') }}
             </p>
             <div wire:model="filter" class="ml-1">
                 <a href="{{ route('countries', ['filter' => 'location', 'order' => 'desc']) }}">
@@ -30,11 +26,7 @@
         </div>
         <div class="bg-gray-100 text-sm font-semibold h-14 flex items-center">
             <p class="ml-6">
-                @if(app()->currentLocale() == 'en') 
-                    New cases
-                @else
-                    ახალი შემთხ.
-                @endif
+                {{ __('messages.new_cases') }}
             </p>
             <div wire:model="filter" class="ml-1 md:mr-0 mr-5">
                 <a href="{{ route('countries', ['filter' => 'confirmed', 'order' => 'desc']) }}">
@@ -52,11 +44,7 @@
             </div>
         </div>
         <div class="bg-gray-100 text-sm font-semibold h-14 flex items-center">
-            @if(app()->currentLocale() == 'en') 
-                Deaths
-            @else
-                სიკვდილი
-            @endif
+            {{ __('messages.death') }}
             <div wire:model="filter" class="ml-1">
                 <a href="{{ route('countries', ['filter' => 'deaths', 'order' => 'desc']) }}">
                     <svg width="10" height="6" viewBox="0 0 10 6" fill="currentColor"
@@ -73,11 +61,7 @@
             </div>
         </div>
         <div class="bg-gray-100 text-sm font-semibold md:rounded-tr-2xl h-14 flex items-center">
-            @if(app()->currentLocale() == 'en') 
-                Recovered
-            @else
-                გამოჯანმრთ.
-            @endif
+            {{ __('messages.recovered') }}
             <div wire:model="filter" class="ml-1">
                 <a href="{{ route('countries', ['filter' => 'recovered', 'order' => 'desc']) }}">
                     <svg width="10" height="6" viewBox="0 0 10 6" fill="currentColor"

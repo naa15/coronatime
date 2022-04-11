@@ -103,7 +103,7 @@ img {
 }
 
 .header a {
-    color: #3d4852;
+    /* color: #3d4852; */
     font-size: 19px;
     font-weight: bold;
     text-decoration: none;
@@ -219,10 +219,8 @@ img {
     -webkit-text-size-adjust: none;
     border-radius: 12px;
     color: #fff;
-    display: inline-block;
     overflow: hidden;
     text-decoration: none;
-    /* text-decoration-color: white; */
     width: 392px;
     height: 56px;
     display: flex;

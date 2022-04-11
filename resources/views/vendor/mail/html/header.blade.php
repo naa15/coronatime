@@ -2,12 +2,8 @@
 <td class="header">
 <a href="{{ $url }}" style="display: inline-block;">
 
-<img src="{{ asset('/images/mail-photo.png')}}" class="logo" alt="Coronatime">
-{{-- @if (trim($slot) === 'Laravel')
-<img src="https://laravel.com/img/notification-logo.png" class="logo" alt="Laravel Logo">
-@else
-{{ $slot }}
-@endif --}}
+<img src="{{ asset('/images/mail-photo.svg')}}" class="logo" alt="Coronatime">
+
 </a>
 </td>
 </tr>

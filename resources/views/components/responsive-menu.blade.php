@@ -6,7 +6,7 @@
     </button>
 
     <div x-cloak x-show="isOpen" x-transition.origin.top.right @click.away="isOpen = false"
-        class="absolute w-20 bg-white border font-semibold px-1.5 py-2 right-0 rounded-xl text-left z-20">
+        class="absolute bg-white border font-semibold px-1.5 py-2 right-0 rounded-xl text-left z-20">
         <ul class="space-y-2">
             <li class="font-bold">
                 {{ auth()->user()->username }}
@@ -15,7 +15,7 @@
                 <form action="logout" method="POST" class="">
                     @csrf
                     <button type="submit"
-                        class="">{{ app()->currentLocale() == 'en' ? 'logout' : 'გამოსვლა' }}</button>
+                        class="">{{ __('messages.log_out') }}</button>
                 </form>
             </li>
         </ul>

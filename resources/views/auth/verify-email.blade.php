@@ -4,6 +4,6 @@
 
 <img src="{{ asset('images/checkicon.svg')}}" alt="check">
 
-<p class="mt-4">We have sent you a confirmation email</p>
+<p class="mt-4">{{ __('messages.confirmation_email_sent_message') }}</p>
 
 @endsection
