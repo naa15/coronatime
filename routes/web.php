@@ -29,7 +29,6 @@ use Illuminate\Support\Carbon;
 
 Route::middleware(['change-locale'])->group(function () {
 	Route::get('/email/verify/{id}/{hash}', function (Request $request, $id, $hash) {
-		// dd($id);
 		$user = User::find($id);
 
 		if ($user && $user->verification_token === $hash)
@@ -41,7 +40,6 @@ Route::middleware(['change-locale'])->group(function () {
 
 		return abort(401);
 	})->name('verification.verify');
-	// ->middleware(['auth', 'signed'])
 
 	Route::get('/email/verify', function () {
 		return view('auth.verify-email');
@@ -91,7 +89,6 @@ Route::middleware(['change-locale'])->group(function () {
 	})->middleware('guest')->name('password.reset');
 
 	Route::post('/reset-password', function (Request $request) {
-		// dd($request->only('email', 'password', 'token'));
 		$request->validate([
 			'token'    => 'required',
 			'email'    => 'required|email',
@@ -114,6 +111,7 @@ Route::middleware(['change-locale'])->group(function () {
 				? view('auth.password-updated')->with('status', __($status))
 				: back()->withErrors(['email' => [__($status)]]);
 	})->middleware('guest')->name('password.update');
+	
 	Route::get('dashboard', function () {
 		return view('worldwide', [
 			'worldwideInfo' => Country::where('code', 'WRLD')->first(),
@@ -124,39 +122,7 @@ Route::middleware(['change-locale'])->group(function () {
 		return view('countries');
 	})->name('countries')->middleware('verified');
 
-	Route::get('/clear-cache', function () {
-		$exitCode = Artisan::call('cache:clear');
-		return $exitCode . ' cache cleared';
-	});
-
-	Route::get('test_email', function () {
-		Mail::raw('Sending emails with Mailgun and Laravel is easy!', function ($message) {
-			$message->subject('Mailgun and Laravel are awesome!');
-			$message->from('nanu@redberry.ge', 'Website Name');
-			$message->to('nanu@redberry.ge');
-		});
-	});
-
-	Route::get('mail-test-00', function () {
-		$user = User::find(1);
-		// return new App\Mail\ResetPasswordEmail($user);
-		// return view('vendor/mail/html/message');
-	});
-
-	Route::get('users', function () {
-		dd(config('app.url'));
-		dd(User::all());
-	});
-
 	Route::post('change-localee', function (Request $request) {
-		// dd($request['lang']);
-
 		return back();
 	})->name('change-localee');
-});
-
-Route::get('/mailable', function () {
-	$url = 'localhost:8000';
-	$user = User::factory()->create();
-	return new WelcomeEmail($url, $user);
 });
