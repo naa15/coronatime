@@ -14,9 +14,9 @@ Coronatime is a website where you can check the statistics of covid19 (including
 
 This project was made for learning/practice purposes.
 
-<p align="center"><img src="https://i.ibb.co/my9Y19C/Screenshot-from-2023-10-19-17-07-18.png" width="400"></p>
+<p align="center"><img src="https://i.ibb.co/my9Y19C/Screenshot-from-2023-10-19-17-07-18.png" width="800"></p>
 
-<p align="center"><img src="https://i.ibb.co/vZm3ttR/Screenshot-from-2023-10-19-17-07-49.png" width="400"></p>
+<p align="center"><img src="https://i.ibb.co/vZm3ttR/Screenshot-from-2023-10-19-17-07-49.png" width="800"></p>
 
 
 ### Prerequisites
