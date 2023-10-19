@@ -7,7 +7,7 @@
         <div class="lg:ml-36 md:w-96 ml-10 mr-10 mt-10">
             <div class="flex justify-between items-center">
                 <img class="w-48" src="{{ asset('/images/logo.svg') }}" alt="coronatime logo">
-                <form action="{{ route('change-localee') }}" method="POST">
+                <form action="{{ route('change-language') }}" method="POST">
                     @csrf
                     <select onchange="this.form.submit()" class="bg-white" name="lang" id="lang">
                         <option value="en" @if(app()->currentLocale() == 'en') selected @endif>English</option>

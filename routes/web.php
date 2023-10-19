@@ -2,17 +2,13 @@
 
 use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\SessionController;
-use App\Mail\WelcomeEmail;
+use App\Http\Controllers\WelcomeMailController;
 use App\Models\Country;
 use App\Models\User;
-use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Password;
 use Illuminate\Auth\Events\PasswordReset;
-use Illuminate\Support\Facades\App;
-use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Str;
 use Illuminate\Support\Carbon;
 
@@ -28,22 +24,9 @@ use Illuminate\Support\Carbon;
 */
 
 Route::middleware(['change-locale'])->group(function () {
-	Route::get('/email/verify/{id}/{hash}', function (Request $request, $id, $hash) {
-		$user = User::find($id);
+	Route::get('/email/verify/{id}/{hash}', [WelcomeMailController::class, 'verifyUser'])->name('verification.verify');
 
-		if ($user && $user->verification_token === $hash)
-		{
-			$user->email_verified_at = Carbon::now();
-			$user->save();
-			return view('auth.verified-email');
-		}
-
-		return abort(401);
-	})->name('verification.verify');
-
-	Route::get('/email/verify', function () {
-		return view('auth.verify-email');
-	})->middleware('auth')->name('verification.notice');
+	Route::get('/email/verify', [WelcomeMailController::class, 'verificationNotice'])->middleware('auth')->name('verification.notice');
 
 	Route::get('/', function () {
 		if (auth()->check())
@@ -111,7 +94,7 @@ Route::middleware(['change-locale'])->group(function () {
 				? view('auth.password-updated')->with('status', __($status))
 				: back()->withErrors(['email' => [__($status)]]);
 	})->middleware('guest')->name('password.update');
-	
+
 	Route::get('dashboard', function () {
 		return view('worldwide', [
 			'worldwideInfo' => Country::where('code', 'WRLD')->first(),
@@ -122,7 +105,7 @@ Route::middleware(['change-locale'])->group(function () {
 		return view('countries');
 	})->name('countries')->middleware('verified');
 
-	Route::post('change-localee', function (Request $request) {
+	Route::post('change-language', function (Request $request) {
 		return back();
-	})->name('change-localee');
+	})->name('change-language');
 });
